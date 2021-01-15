@@ -1,0 +1,17 @@
+---
+- name: Test Device
+  roles:
+    - Juniper.junos
+  hosts: VMX 
+  connection: local
+  gather_facts: no
+  user: "{{ user }}"
+  tasks:
+    - name: Show Interfaces 
+      juniper_junos_command:
+        commands:
+          - show interfaces "{{ test_var }}" terse
+      register: junos_ints
+    - name: Print Facts
+      debug:
+        msg: "{{ junos_ints.stdout_lines }}"
